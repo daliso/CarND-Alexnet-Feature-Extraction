@@ -19,7 +19,12 @@ fc7 = AlexNet(resized, feature_extract=True)
 # HINT: Look at the final layer definition in alexnet.py to get an idea of what this
 # should look like.
 shape = (fc7.get_shape().as_list()[-1], nb_classes)  # use this shape for the weight matrix
-probs = ...
+
+fc8W = tf.Variable(tf.truncated_normal(shape, mean = 0, stddev = 0.01))
+fc8b = tf.Variable(tf.zeros(shape[1]))
+
+logits = tf.nn.xw_plus_b(fc7, fc8W, fc8b)
+probs = tf.nn.softmax(logits)
 
 init = tf.global_variables_initializer()
 sess = tf.Session()
